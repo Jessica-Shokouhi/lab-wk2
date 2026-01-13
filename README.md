@@ -59,9 +59,9 @@ source ./env.sh
 
 ### **env.sh**
 ```bash
-USERNAME=admin
-SERVER_IP=54.202.91.139
-SSH_KEY=~/.ssh/wkone
+export USERNAME="admin"
+export SERVER_IP="54.202.91.139"
+export SSH_KEY="$HOME/.ssh/wkone"
 ```
 
 ---
@@ -82,8 +82,7 @@ source ./env.sh
 ssh -i "$SSH_KEY" "$USERNAME@$SERVER_IP" << 'EOF'
 sudo apt update
 sudo apt install -y nginx
-sudo systemctl start nginx
-sudo systemctl enable nginx
+sudo systemctl enable --now nginx
 EOF
 ```
 
@@ -100,29 +99,24 @@ This script:
 
 ### **document-write**
 ```bash
-#!/bin/bash
-# This script writes an HTML document to the nginx web directory
-# The date is generated locally and sent to the remote server.
+#!/usr/bin/env bash
 
-source ./env.sh
-
-TODAY=$(date +"%d/%m/%Y")
-
-ssh -i "$SSH_KEY" "$USERNAME@$SERVER_IP" << EOF
-sudo tee /var/www/html/index.html > /dev/null << HTML
+source ./ec2.env
+now=$(date "+%d/%m/%Y")
+ssh -i "$SSH_KEY_PATH" "$USERNAME@$IP_ADDRESS" <<EOF
+sudo bash << END
+cat > /var/www/html/index.html
 <!DOCTYPE html>
-<html lang='en'>
+<html>
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>Hello World</title>
+    <title>Nginx</title>
 </head>
 <body>
-  <h1>Hello World!</h1>
-  <p>Today's date is: $TODAY</p>
-</body>
+    <h1>Nginx is running!</h1>
+    <p>Today's date is $now</p>
+<boday>
 </html>
-HTML
+END
 
 sudo systemctl reload nginx
 EOF
@@ -136,6 +130,7 @@ EOF
 After running both scripts we test:
 
 ```bash
+source env.sh
 ./nginx-install
 ./document-write
 ```
@@ -161,6 +156,7 @@ Public GitHub repo URL:
 ```
 https://github.com/Jessica-Shokouhi/lab-wk2
 ```
+
 
 
 
