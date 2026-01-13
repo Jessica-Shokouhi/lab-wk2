@@ -1,5 +1,4 @@
 #!/bin/bash
-# This script writes an HTML document to the nginx web directory
 # The date is generated locally and sent to the remote server.
 
 source ./env.sh
