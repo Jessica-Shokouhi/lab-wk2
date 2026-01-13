@@ -1,6 +1,5 @@
 #!/bin/bash
 # This script installs nginx on the remote EC2 instance
-# and enables and starts the nginx service.
 
 source ./env.sh
 
