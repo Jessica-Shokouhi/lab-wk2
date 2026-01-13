@@ -155,11 +155,12 @@ http://54.202.91.139/
 
 # **Repository Link**
 
-Provide your public GitHub repo URL:
+Public GitHub repo URL:
 
 ```
-https://github.com/your-username/your-repo-name
+https://github.com/Jessica-Shokouhi/lab-wk2
 ```
+
 
 
 
