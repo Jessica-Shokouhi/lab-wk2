@@ -4,8 +4,8 @@
 
 ## **Group Members**
 - **Jessica**
-- **Partner Name**
-- **Partner Name**
+- **Cole**
+- **Kyle**
 
 ---
 
@@ -160,5 +160,6 @@ Provide your public GitHub repo URL:
 ```
 https://github.com/your-username/your-repo-name
 ```
+
 
 
