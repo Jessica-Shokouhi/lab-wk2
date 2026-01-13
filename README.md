@@ -57,7 +57,7 @@ This file is sourced using:
 source ./env.sh
 ```
 
-### **env-vars**
+### **env.sh**
 ```bash
 USERNAME=admin
 SERVER_IP=54.202.91.139
@@ -161,6 +161,7 @@ Public GitHub repo URL:
 ```
 https://github.com/Jessica-Shokouhi/lab-wk2
 ```
+
 
 
 
