@@ -49,19 +49,19 @@ All scripts were executed **from the local development environment**, not from t
 
 ---
 
-# **Environment Variables File — `env-vars`**
+# **Environment Variables File — `env.sh`**
 
 This file is sourced using:
 
 ```bash
-source env-vars
+source ./env.sh
 ```
 
 ### **env-vars**
 ```bash
-USERNAME="admin"
-IP_ADDRESS="54.202.91.139"
-SSH_KEY_PATH="$HOME/.ssh/wkone"
+USERNAME=admin
+SERVER_IP=54.202.91.139
+SSH_KEY=~/.ssh/wkone
 ```
 
 ---
@@ -133,7 +133,7 @@ EOF
 
 # **Testing the Server**
 
-After running both scripts:
+After running both scripts we test:
 
 ```bash
 ./nginx-install
@@ -161,6 +161,7 @@ Public GitHub repo URL:
 ```
 https://github.com/Jessica-Shokouhi/lab-wk2
 ```
+
 
 
 
