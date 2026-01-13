@@ -1,6 +1,6 @@
 # **README.md**
 
-# **Lab: Hide Folder Information — Nginx Install & HTML Deployment**
+# **lab-wk2 — Nginx Install & HTML Deployment**
 
 ## **Group Members**
 - **Jessica**
@@ -160,4 +160,5 @@ Provide your public GitHub repo URL:
 ```
 https://github.com/your-username/your-repo-name
 ```
+
 
