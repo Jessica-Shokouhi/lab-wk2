@@ -1,4 +1,4 @@
 #lab-wk2
-USERNAME=admin
-SERVER_IP=54.202.91.139
-SSH_KEY=~/.ssh/wkone
+export USERNAME="admin"
+export SERVER_IP="54.202.91.139"
+export SSH_KEY="$HOME/.ssh/wkone"
