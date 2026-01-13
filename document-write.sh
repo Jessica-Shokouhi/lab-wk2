@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # The date is generated locally and sent to the remote server.
-source ./ec2.env
+source ./env.sh
 now=$(date "+%d/%m/%Y")
 ssh -i "$SSH_KEY_PATH" "$USERNAME@$IP_ADDRESS" <<EOF
 sudo bash << END
