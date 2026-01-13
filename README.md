@@ -149,7 +149,8 @@ http://54.202.91.139/
 
 # **Screenshot of Working Server**
 
-*(Insert your screenshot here)*
+<img width="682" height="432" alt="Screenshot1" src="https://github.com/user-attachments/assets/d359f2c9-f2e2-4bd3-9cd2-aba7d0caa8a8" />
+
 
 ---
 
@@ -160,6 +161,7 @@ Public GitHub repo URL:
 ```
 https://github.com/Jessica-Shokouhi/lab-wk2
 ```
+
 
 
 
