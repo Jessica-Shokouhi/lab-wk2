@@ -2,7 +2,7 @@
 # The date is generated locally and sent to the remote server.
 source ./env.sh
 now=$(date "+%d/%m/%Y")
-ssh -i "$SSH_KEY_PATH" "$USERNAME@$IP_ADDRESS" <<EOF
+ssh -i "$SSH_KEY_PATH" "$USERNAME@$SERVER_IP" <<EOF
 sudo bash << END
 cat > /var/www/html/index.html
 <!DOCTYPE html>
