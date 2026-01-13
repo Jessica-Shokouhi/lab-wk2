@@ -1,0 +1,3 @@
+USERNAME=admin
+SERVER_IP=54.202.91.139
+SSH_KEY=~/.ssh/wkone
