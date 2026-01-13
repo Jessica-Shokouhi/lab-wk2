@@ -3,7 +3,7 @@
 
 source ./env.sh
 
-ssh -i "$SSH_KEY" "$USERNAME@$SERVER_IP" << 'EOF'
+ssh -i "$SSH_KEY_PATH" "$USERNAME@$SERVER_IP" << 'EOF'
 sudo apt update
 sudo apt install -y nginx
 sudo systemctl enable --now nginx
