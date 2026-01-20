@@ -1,6 +1,5 @@
 ---
 
-````markdown
 # Lab Week 3 - AWS CLI
 
  Our team successfully created a VPC, public subnet, security group, S3 bucket, and an EC2 instance. We also imported an SSH key and connected to the EC2 instance.  
@@ -115,3 +114,4 @@ ssh -i <your-private-key> admin@54.218.43.226
 
 ---
 ```
+
