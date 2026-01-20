@@ -1,166 +1,117 @@
-# **README.md**
+---
 
-# **lab-wk2 — Nginx Install & HTML Deployment**
+````markdown
+# Lab Week 3 - AWS CLI
 
-## **Group Members**
-- **Jessica**
-- **Cole**
-- **Kyle**
+ Our team successfully created a VPC, public subnet, security group, S3 bucket, and an EC2 instance. We also imported an SSH key and connected to the EC2 instance.  
+
+## Team Members
+- Jessica
+- Kyle
+- Cole
 
 ---
 
-## **AWS Region**
-`us-west-2`
+## Scripts
+
+### 1. import-key.sh
+Imports an SSH public key into our AWS account so we can connect to EC2 instances.  
+
+**Usage:**  
+```bash
+./import-key.sh <path-to-your-public-key>
+````
+
+**Output:**
+
+* `key_data` file with the imported key info.
+
+**AWS CLI documentation used:**
+
+* [import-key-pair](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html)
 
 ---
 
-# **Part 1 — SSH Key Creation**
+### 2. create-bucket.sh
 
-### **SSH Key Generation Command**
+Creates an S3 bucket in **us-west-2** if it doesn’t already exist.
+
+**Usage:**
 
 ```bash
-ssh-keygen -t ed25519 -f ~/.ssh/wkone
+./create-bucket.sh <unique-bucket-name>
 ```
 
-### **Explanation of Options**
-- **`ssh-keygen`** — Generates a new SSH key pair.  
-- **`-t ed25519`** — Specifies the key type using the Ed25519 elliptic‑curve algorithm.  
-- **`-f ~/.ssh/wkone`** — Sets the output filename for the private key. The public key becomes `wkone.pub`.
+**Output:**
 
-After generating the key, the public key was added to the AWS console under:
+* `bucket_data` file with bucket location and ARN.
 
-**IAM → Security Credentials → SSH Keys**
+**AWS CLI documentation used:**
 
----
+* [create-bucket](https://docs.aws.amazon.com/cli/latest/reference/s3api/create-bucket.html)
 
-# **Part 2 — EC2 Instance Setup**
+**Example output (`bucket_data`):**
 
-A Debian EC2 instance was created using:
-
-- **Instance type:** `t2.micro`  
-- **AMI:** Debian  
-- **SSH key:** `wkone`  
-- **Security group:** Allowed **SSH (22)** and **HTTP (80)**  
----
-
-# **Part 3 — Scripts & Environment Variables**
-
-All scripts were executed **from the local development environment**, not from the EC2 instance.
+```json
+{
+  "Location": "http://jessica-bucket-3420.s3.amazonaws.com/",
+  "BucketArn": "arn:aws:s3:::jessica-bucket-3420"
+}
+```
 
 ---
 
-# **Environment Variables File — `env.sh`**
+### 3. create-vpc.sh
 
-This file is sourced using:
+Creates a VPC with a public subnet, internet gateway, and route table. Writes IDs to `infrastructure_data`.
+
+**Output (`infrastructure_data`):**
+
+```
+vpc_id=vpc-005889f22c09c3e72
+subnet_id=subnet-0097cb0f4e5724619
+```
+
+**AWS CLI documentation used:**
+
+* [create-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc.html)
+* [create-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html)
+* [create-internet-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-internet-gateway.html)
+
+---
+
+### 4. create-ec2.sh
+
+Launches an EC2 instance in the public subnet using:
+
+* the Debian AMI
+* the security group created in the script
+* the key pair imported with `import-key.sh`
+
+It writes the **public IP** to `instance_data`.
+
+**Output (`instance_data`):**
+
+```
+54.218.43.226
+```
+
+**AWS CLI documentation used:**
+
+* [run-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html)
+* [describe-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html)
+
+**SSH Test:**
 
 ```bash
-source ./env.sh
+ssh -i <your-private-key> admin@54.218.43.226
 ```
 
-### **env.sh**
-```bash
-export USERNAME="admin"
-export SERVER_IP="54.202.91.139"
-export SSH_KEY="$HOME/.ssh/wkone"
-```
+* We successfully connected to the EC2 instance and verified Debian was running.
 
 ---
-
-# **Script 1 — `nginx-install`**
-
-### **Description**
-Installs Nginx on the remote Debian EC2 instance, then starts and enables the service.
-
-### **nginx-install**
-```bash
-#!/bin/bash
-# This script installs nginx on the remote EC2 instance
-# and enables and starts the nginx service.
-
-source ./env.sh
-
-ssh -i "$SSH_KEY" "$USERNAME@$SERVER_IP" << 'EOF'
-sudo apt update
-sudo apt install -y nginx
-sudo systemctl enable --now nginx
-EOF
-```
-
----
-
-# **Script 2 — `document-write`**
-
-### **Description**
-This script:
-
-- Gets today’s date from the **local machine**
-- Uses a heredoc to overwrite `/var/www/html/index.html`
-- Reloads Nginx
-
-### **document-write**
-```bash
-#!/usr/bin/env bash
-
-source ./ec2.env
-now=$(date "+%d/%m/%Y")
-ssh -i "$SSH_KEY_PATH" "$USERNAME@$IP_ADDRESS" <<EOF
-sudo bash << END
-cat > /var/www/html/index.html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Nginx</title>
-</head>
-<body>
-    <h1>Nginx is running!</h1>
-    <p>Today's date is $now</p>
-<boday>
-</html>
-END
-
-sudo systemctl reload nginx
-EOF
 
 ```
 
 ---
-
-# **Testing the Server**
-
-After running both scripts we test:
-
-```bash
-source env.sh
-./nginx-install
-./document-write
 ```
-
-Visit:
-
-```
-http://54.202.91.139/
-```
----
-
-# **Screenshot of Working Server**
-
-<img width="682" height="432" alt="Screenshot1" src="https://github.com/user-attachments/assets/d359f2c9-f2e2-4bd3-9cd2-aba7d0caa8a8" />
-
-
----
-
-# **Repository Link**
-
-Public GitHub repo URL:
-
-```
-https://github.com/Jessica-Shokouhi/lab-wk2
-```
-
-
-
-
-
-
-
-
